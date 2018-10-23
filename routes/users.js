@@ -23,11 +23,12 @@ router.post('/register',function(req,res){
     if(err){
       res.render('yangerros',err);
     }else{
-      res.redirect('/login');
+      res.redirect('/login.html');
     }
   })
 
 })
+
 // 登录处理
 router.post('/login',function(req,res){
   usersModel.login(req.body,function(err,data){
@@ -51,13 +52,42 @@ router.post('/login',function(req,res){
   })
 })
 
-
 // 退出登录
 router.get('/logout',function(req,res){
   res.clearCookie('username');
   res.clearCookie('nickname');
   res.clearCookie('isAdmin');
-  res.redirect('/login');
+  res.redirect('/login.html');
 })
+
+router.post('/update', function(req, res) {
+  console.log('用户修改接口处理代码');
+  console.log(req.body);
+
+  usersModel.update(req.body, function(err) {
+    if (err) {
+      // res.render('werror', err);
+      // ajax
+      res.send(err);
+    } else {
+      console.log('成功了');
+      res.send({code: 0, msg: '成功了'});
+    }
+  })
+})
+
+
+// 删除操作
+router.post("/removes",function(req,res){
+  console.log(req.body)
+  usersModel.removes(req.body,function(err){
+    if(err){
+      res.send(err);
+    }else{
+      res.send({code: 0, msg: '删除成功了'});
+    }
+  })
+})
+
 
 module.exports = router;

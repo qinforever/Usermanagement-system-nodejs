@@ -6,6 +6,7 @@ const urll = 'mongodb://127.0.0.1:27017';
 // var  usersModel=require('./models/usersModel.js');
 var usersModel = require('../models/usermodels.js');
 
+// localhost:3000/datamongodb/user-manger
 router.get('/user-manager',function(req,res){
     var nick=url.parse(req.url,true).query.nick;
     let page = req.query.page || 1; // 页码

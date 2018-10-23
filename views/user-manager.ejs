@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,28 @@
   <title>Document</title>
   <link rel="stylesheet" href="/css/reset.css">
   <link rel="stylesheet" href="/css/index.css">
+  <style>
+    .show_updata{
+          display:none;
+          background: #ccc;
+          width:250px;
+          left:50%;
+          margin-left:-50px;
+          position:absolute;
+          top:320px;
+          height:200px;
+          border:1px solid gray;
+        }
+        .show_updata li{
+          margin:2px auto;
+        }
+        #subt{
+          display:block;
+          margin:0 auto;
+        }
+  </style>
 </head>
+
 <body>
 
   <div class="index">
@@ -22,8 +44,10 @@
         <form action="/datamongodb/user-manager" method="get">
           <input type="text" placeholder="输入用户昵称" name='nick'>
           <input type="submit" value="搜索">
-      </form>
-        <table border="1" width="600";height="400";>
+        </form>
+
+       
+        <table border="1" width="600" ;height="400" ;>
           <thead>
             <tr>
               <th>序号</th>
@@ -40,58 +64,160 @@
           <tbody>
             <!-- 循环 userList 显示用户数据 -->
             <% for (var i = 0; i < userList.length; i++) { %>
-              <tr>
-                <td><%= userList[i]._id %></td>
-                <td><%= userList[i].username %></td>
-                <td><%= userList[i].nickname %></td>
-                <td><%= userList[i].phone %></td>
-                <td><%= userList[i].sex || '-' %></td>
-                <td><%= userList[i].age || '-' %></td>
-                <td><%= parseInt(userList[i].is_admin) ? '是' : '否' %></td>
-                <td>
-                  <!--
+            <tr>
+              <td class="td_p1">
+                <%= userList[i]._id %>
+              </td>
+              <td class="td_p2">
+                <%= userList[i].username %>
+              </td>
+              <td class="td_p3">
+                <%= userList[i].nickname %>
+              </td>
+              <td class="td_p4">
+                <%= userList[i].phone %>
+              </td>
+              <td class="td_p5">
+                <%= userList[i].sex || '-' %>
+              </td>
+              <td class="td_p6">
+                <%= userList[i].age || '-' %>
+              </td>
+              <td class="td_p7">
+                <%= parseInt(userList[i].is_admin) ? '是' : '否' %>
+              </td>
+              <td>
+                <!--
                     1. 如果当前登录的管理员跟这条记录匹配。那么可以修改，
                     2. 如果这条记录是管理员记录的话，那么不可以删除
                    -->
 
-                  <% if (userList[i].username === username) { %>
-                    <a href="#">修改</a>
-                  <% } else if (parseInt(userList[i].is_admin)) { %>
+                <% if (userList[i].username === username) { %>
 
-                  <% } else { %>
-                    <a href="#">修改</a>
-                    <a href="#">删除</a>
-                  <% } %>
+                <% } else if (parseInt(userList[i].is_admin)) { %>
 
-                </td>
-              </tr> 
+                <% } else { %>
+                <a class="updatas" href="#">修改</a>
+                <a class="deletes" href="#">删除</a>
+                <% } %>
+
+              </td>
+            </tr>
             <% } %>
 
           </tbody>
         </table>
 
         <!-- 通过 传过来  totalPage 来渲染我们的 分页组件 -->
-        
+
         <ul class="pageNum">
           <% if(totalPage) {
               for(var i = 0; i < totalPage; i++) { %>
-                <li>
-                  <a href="/user-manager?page=<%= i+1 %>"><%= i+1 %></a>
-                </li>
+          <li>
+            <a href="/user-manager.html?page=<%= i+1 %>">
+              <%= i+1 %></a>
+          </li>
           <% }}else { %>
-            <% for(var i = 0; i < searchPage; i++) { %>
-              <li>
-                <a href="/datamongodb/user-manager?nick=<%= nick%>&page=<%= i+1 %>"><%= i+1 %>页</a>
-              </li>
-            <% } %>
+          <% for(var i = 0; i < searchPage; i++) { %>
+          <li>
+            <a href="/datamongodb/user-manager?nick=<%= nick%>&page=<%= i+1 %>">
+              <%= i+1 %>页</a>
+          </li>
           <% } %>
-
-
+          <% } %>
         </ul>
-
       </div>
+      <!-- 点击修改 -->
+      <div class="show_updata">
+        <ol class="oli_list">
+          <li class="oli_p1"> 序&nbsp;&nbsp;&nbsp;号：<input type="text"></li>
+          <li class="oli_p2"> 用户名：<input type="text"></li>
+          <li class="oli_p3"> 用户昵称：<input type="text"></li>
+          <li class="oli_p4"> 手机号码：<input type="text"></li>
+          <li class="oli_p5"> 性&nbsp;&nbsp;&nbsp;别：<input type="text"></li>
+          <li class="oli_p6"> 年&nbsp;&nbsp;&nbsp;龄：<input type="text"></li>
+          <li class="oli_p7"> 是否管理员：<input type="text"></li>
+          <li><input type="submit" name="" id="subt" value="确认修改"></li>
+        </ol>
+      </div>
+
     </div>
   </div>
-
 </body>
+
 </html>
+<script src="/lib/jquery/jquery.min.js"></script>
+
+<script>
+  $(function () {
+    $(".updatas").click(function () {
+      $(".show_updata").show();
+      var id = $(this).parent("td").parent("tr").find(".td_p1").html().trim();
+      var username = $(this).parent("td").parent("tr").find(".td_p2").html().trim();
+      var nickname = $(this).parent("td").parent("tr").find(".td_p3").html().trim();
+      var phone = $(this).parent("td").parent("tr").find(".td_p4").html().trim();
+      var sex = $(this).parent("td").parent("tr").find(".td_p5").html().trim();
+      var age = $(this).parent("td").parent("tr").find(".td_p6").html().trim();
+      var is_admin = $(this).parent("td").parent("tr").find(".td_p7").html().trim();
+
+      // 添加进去
+      $(".oli_p1").find("input").val(id);
+      $(".oli_p2").find("input").val(username);
+      $(".oli_p3").find("input").val(nickname);
+      $(".oli_p4").find("input").val(phone);
+      $(".oli_p5").find("input").val(sex);
+      $(".oli_p6").find("input").val(age);
+      $(".oli_p7").find("input").val(is_admin);
+
+    })
+    $("#subt").click(function () {
+      // 发送ajax给数据库
+      alert($(".oli_p1").find("input").val())
+      $.ajax({
+        type: "post",
+        url: "/users/update",
+        data: {
+          sid: $(".oli_p1").find("input").val(),
+          uname: $(".oli_p2").find("input").val(),
+          niname: $(".oli_p3").find("input").val(),
+          phones: $(".oli_p4").find("input").val(),
+          sexs: $(".oli_p5").find("input").val(),
+          ages: $(".oli_p6").find("input").val(),
+          is_admins: $(".oli_p7").find("input").val()
+        },
+        success: function (result) {
+          console.log(result); // 在浏览器里的 console
+
+          if (result.code === 0) {
+            alert('成功了');
+            location.reload();
+          } else {
+            alert(result.msg);
+          }
+        }
+      });
+      $(".show_updata").hide();
+    });
+// <!-- 点击删除功能-->
+  $(".deletes").click(function(){
+      $.ajax({
+        url: "/users/removes",
+        type:"post",
+        data:{
+          ids:$(this).parent("td").parent("tr").find(".td_p1").html().trim(),
+        },
+        success:function(res){
+            if(res.code===0){
+              alert("删除成功了");
+              location.reload();
+            }else{
+              alert(result.msg);
+            }
+        }
+      })
+  })
+
+
+  })
+
+</script>

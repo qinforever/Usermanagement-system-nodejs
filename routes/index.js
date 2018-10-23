@@ -13,28 +13,28 @@ router.get('/', function(req, res, next) {
       isAdmin:parseInt(req.cookies.isAdmin)?'管理员':''
     });
   }else{
-    res.redirect('/login');
+    res.redirect('/login.html');
   }
 });
 
 
 // 注册页面
-router.get('/register', function(req, res) {
+router.get('/register.html', function(req, res) {
   res.render('register');
 });
 
 // 登录页面
-router.get('/login', function(req, res) {
+router.get('/login.html', function(req, res) {
   res.render('login');
 })
 
 // 用户管理页面
-router.get('/user-manager', function(req, res) {
+router.get('/user-manager.html', function(req, res) {
   // 同首页，需要判断是否用户登录，并且判断用户是否是管理员
   if (req.cookies.username && parseInt(req.cookies.isAdmin)) {
     // 需要查询数据库
     // 从前端取得2个参数
-    let page = req.query.page || 5; // 页码
+    let page = req.query.page || 1; // 页码
     let pageSize = req.query.pageSize || 5; // 每页显示的条数
 
     usersModel.getUserList({
@@ -44,6 +44,10 @@ router.get('/user-manager', function(req, res) {
       if (err) {
         res.render('werror', err);
       } else {
+
+        console.log(data.userList);
+        console.log('===================');
+
         res.render('user-manager', {
           username: req.cookies.username,
           nickname: req.cookies.nickname,
@@ -60,19 +64,20 @@ router.get('/user-manager', function(req, res) {
 
 
   } else {
-    res.redirect('/login');
+    res.redirect('/login.html');
   }
 })
 
 // 手机管理页面
-router.get('/mobile-manager', function(req, res) {
+router.get('/mobile-manager.html', function(req, res) {
   // 同首页，需要判断是否用户登录，并且判断用户是否是管理员
   if (req.cookies.username && parseInt(req.cookies.isAdmin)) {
     res.render('mobile-manager');
   } else {
-    res.redirect('/login');
+    res.redirect('/login.html');
   }
 })
+
 
 
 
