@@ -1,0 +1,82 @@
+.index {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.index .header h2{
+  color:red;
+}
+.index .header {
+  background:rebeccapurple;
+  height: 60px;
+  line-height: 60px;
+  border-bottom: 1px solid #000;
+}
+.header_right p{
+  color: #fff;
+  margin-right:5px;
+}
+.olu_list{
+ padding-left:446px;
+  text-align:center;
+  height: 30px;
+  line-height: 30px;
+  margin:10px auto;
+}
+.olu_list li{
+  margin:0 2px;
+  display:inline-block;
+  border:1px solid gray;
+  text-align:center;
+  line-height: 22px;
+  width:30px;
+height:22px;
+ float:left;
+}
+.index .container {
+  display: flex;
+  flex: 1;
+}
+.menu_item a{
+  border-radius:50%;
+  padding:10px 5px;
+  background: #fff;
+}
+.container .menu {
+  background: #82df15;
+  width: 260px;
+  height: 100%;
+}
+
+.container .main {
+  text-align:center;
+  flex: 1;
+  height: 100%;
+}
+
+/* // ======== [头部样式] ======== */
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header .header_left {
+
+}
+
+.header .header_right button{
+  background:#ccc;
+}
+.header .header_right {
+  display: flex;
+}
+
+/* // ======== [左侧菜单] ======== */
+.menu {
+  border-right: 1px solid #000;
+}
+
+.menu .menu_item {
+  height: 50px;
+  line-height: 50px;
+}

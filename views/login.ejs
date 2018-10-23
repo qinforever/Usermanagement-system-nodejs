@@ -1,12 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+  
 </head>
 <body>
-    <h1>登录页面</h1>
+
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-md-offset-4">
+          <h1>XX - 后台管理系统</h1>
+
+          <form action="/users/login" method="POST" class="form-horizontal">
+            <div class="form-group">
+              <label class="control-label col-sm-3">用户名：</label>
+              <div class="col-sm-9">
+                <input type="text" name="username" class="form-control" placeholder="请输入用户名">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label col-sm-3">密码：</label>
+              <div class="col-sm-9">
+                <input type="password" name="password" class="form-control" placeholder="请输入密码">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="/lib/jquery/jquery.min.js"></script>
+  <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

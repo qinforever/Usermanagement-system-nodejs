@@ -6,7 +6,7 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var da_mongodbs = require('./routes/datamongodb');
+var mobileRouter = require('./routes/mobile');
 
 var app = express();
 
@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/datamongodb', da_mongodbs);
+app.use('/mobile', mobileRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

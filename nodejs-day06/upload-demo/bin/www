@@ -5,14 +5,14 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('yangqin-node-project:server');
+var debug = require('debug')('upload-demo:server');
 var http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '5400');
+var port = normalizePort(process.env.PORT || '8080');
 app.set('port', port);
 
 /**
