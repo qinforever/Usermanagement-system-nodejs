@@ -1,12 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="/css/reset.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <style>
+        .show_updata{
+          display:none;
+          background: #ccc;
+          width:250px;
+          left:50%;
+          margin-left:-50px;
+          position:absolute;
+          top:320px;
+          height:200px;
+          border:1px solid gray;
+        }
+        .show_updata li{
+          margin:2px auto;
+        }
+        #subt{
+          display:block;
+          margin:0 auto;
+        }
+  </style>
 </head>
+
 <body>
-    hello word
+
+    <div class="index">
+
+        <%- include('./publickcommon/header.ejs', { nickname: nickname, isAdmin: isAdmin }) %>
+
+        <div class="container">
+
+            <%- include('./publickcommon/menu.ejs', { isAdmin: isAdmin }) %>
+
+            <div class="main">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>图片</th>
+                            <th>手机名称</th>
+                            <th>平牌</th>
+                            <th>官方指导价</th>
+                            <th>二手回收价</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+
+        </div>
+    </div>
+
+    <script src="/lib/jquery/jquery.min.js"></script>
+    <script></script>
 </body>
+
 </html>
