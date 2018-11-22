@@ -48,7 +48,8 @@ router.get('/user-manager.html', function(req, res) {
         console.log(data.userList);
         console.log('===================');
 
-        res.render('user-manager', {
+        res.render('user-manager', 
+        {
           username: req.cookies.username,
           nickname: req.cookies.nickname,
           isAdmin: parseInt(req.cookies.isAdmin) ? '(管理员)' : '',

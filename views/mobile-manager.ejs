@@ -8,6 +8,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="/css/reset.css">
     <link rel="stylesheet" href="/css/index.css">
+     
     <style>
         .show_updata{
           display:none;
@@ -27,6 +28,29 @@
           display:block;
           margin:0 auto;
         }
+        .addphoneshow{
+            display:none;
+            width:400px;
+            height: 300px;
+            border:1px solid blue;
+            position:absolute;
+            background:#ccc;
+            left:75%;
+            margin-left:-250px;
+            top:25%;
+            margin-right:-250px;
+        }
+        .tab_phone{
+            margin-left:5px;
+        }
+        .addphoneshow input{
+            display:block;
+            margin:15px auto;
+        }
+        tbody td img{
+            width:50px;
+            height: 50px;
+        }
   </style>
 </head>
 
@@ -41,7 +65,19 @@
             <%- include('./publickcommon/menu.ejs', { isAdmin: isAdmin }) %>
 
             <div class="main">
-                <table>
+                <button id="addphone">新增手机</button>
+                <div class="addphoneshow">
+                        <h2>新增手机</h2>
+                        <input id="phoneName" type="text" placeholder="手机名称">
+                        <input id="phoneBrand" type="text" placeholder="手机品牌">
+                        <input id="phoneG" type="text" placeholder="官方指导价">
+                        <input id="phoneE" type="text" placeholder="二手回收价">
+                        <input id="phoneImg" type="file">
+
+                        <button id="add">新增</button>
+                        <button id="deletes">取消</button>
+                </div>
+                <table class="tab_phone" border="1">
                     <thead>
                         <tr>
                             <th>序号</th>
@@ -54,17 +90,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                            <td>1</td>
-                        </tr>
+                       
                     </tbody>
                 </table>
+                <ul id="pageEl">
+
+                </ul>
             </div>
             
 
@@ -72,7 +103,104 @@
     </div>
 
     <script src="/lib/jquery/jquery.min.js"></script>
-    <script></script>
+    <script>
+        $(function(){
+           
+             // 定义一个方法
+             var page=1;
+             var pageSize=2;
+
+             function getList(){
+                 $.get('/datamongodb/list',{
+                    page:page,
+                    pageSize:pageSize
+                 },function(res){
+                     console.log(res);
+                     if(res.code==0){
+                         var list=res.data.list;
+                         var totalPage = res.data.totalPage;
+
+                         var str="";
+                         for(var i=0;i<list.length;i++){
+                             str+=`
+                             <tr>
+                                <td>${i + 1}</td>
+                                <td>
+                                <img src="/phones/${list[i].fileName}" />
+                                </td>
+                                <td>${ list[i].phoneName }</td>
+                                <td>${ list[i].phoneBrand }</td>
+                                <td>${ list[i].phoneG }</td>
+                                <td>${ list[i].phoneE }</td>
+                                <td>修改， 删除</td>
+                            </tr>
+                             `;
+                         }
+                             //  分页显示
+                        var pagestr="";
+                            for(var j=0;j<totalPage;j++){
+                            pagestr+=`
+                                <button>${j+1}</button>
+                            `;
+                           }
+
+                    $("tbody").html(str);
+                    $("#pageEl").html(pagestr);
+                    
+                       
+                     }
+                     
+                
+                    })
+             }
+
+            $("#addphone").click(function(){
+                $(".addphoneshow").show();
+            })
+            $("#deletes").click(function(){
+                $(".addphoneshow").hide();
+            })
+            $("#add").click(function(){
+            //  用ajax的方法提交，用post提交
+            // 模拟from表单
+            var formData=new FormData();
+            formData.append('phoneName',$('#phoneName').val());
+            formData.append('phoneBrand',$('#phoneBrand').val());
+            formData.append('phoneG',$('#phoneG').val());
+            formData.append('phoneE',$('#phoneE').val());
+             
+            formData.append('phoneImg',$('#phoneImg')[0].files[0]);
+                $.ajax({
+                    type:'post',
+                    url:'/datamongodb/add',
+                    contentType:false,
+                    processData:false,
+                    data:formData,
+                    success:function(result){
+                        console.log(result);
+                        if(result.code==0){
+                            $(".addphoneshow").hide();
+                            getList();
+
+
+                        }else{
+                            alert(result.msg);
+                        }
+                    },
+                    error:function(err){
+
+                    }
+                })
+
+            })
+            // 点击分页是时候分别显示
+            $('#pageEl ').on('click','button',function(){
+                page=$(this).text().trim();
+                getList();
+            })
+
+        })
+    </script>
 </body>
 
 </html>

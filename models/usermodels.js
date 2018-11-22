@@ -6,16 +6,7 @@ const MongoClient = require('mongodb').MongoClient;
 const url = 'mongodb://127.0.0.1:27017';
 const async = require('async');
 const usersModel = {
-    // //**
-    //  * 
-    //  * @param {object} data 
-    //  * @param {Function} cb 
-    //  */
 
-
-    // const data={
-
-    // }
 
     add(data, cb) {
         MongoClient.connect(url, function (err, client) {
@@ -86,25 +77,7 @@ const usersModel = {
                 }
                 client.close();
             })
-            // db.collection('user').find({username:data.username}).count(function(err,num){
-            //     if(err) throw err;
-            //     if(num==0){
-            //         db.collection('user').find().count(function(err,num){
-            //             if(err) throw err;
-            //             data_id=num+1;
 
-            //             db.collection('user').insertOne(data,function(err){
-            //                 if(err) throw err;
-            //                 cb(null);
-
-            //                 client.close();
-            //             })
-            //         })
-            //     }else{
-            //         cb("已经注册过了");
-            //         client.close();
-            //     }
-            // })
         })
     },
     // 登录的方法及验证
@@ -200,6 +173,7 @@ const usersModel = {
         })
     },
     search(data, cb) {
+        console.log(data.ncik)
         MongoClient.connect(url, function (err, client) {
             if (err) {
                 cb({ code: -101, msg: '链接数据库失败' });

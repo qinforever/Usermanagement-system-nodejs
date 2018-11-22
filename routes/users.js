@@ -7,7 +7,6 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-
 // 注册的数据发送过来
 router.post('/register',function(req,res){
   // console.log(req.body)
